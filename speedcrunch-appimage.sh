@@ -69,6 +69,12 @@ chmod +x ./appimagetool
 ./appimagetool --comp zstd \
   --mksquashfs-opt -Xcompression-level --mksquashfs-opt 10 \
   -n -u "$UPINFO" "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-anylinux-"$ARCH".AppImage
+ls
+if [ ! -f *.AppImage.zsync ]; then
+	echo "No .zsync file was made"
+	exit 1
+fi
+
 mv ./*.AppImage* ..
 cd ..
 rm -rf ./"$APP" || exit 1
