@@ -66,10 +66,16 @@ wget -q "$APPIMAGETOOL" -O ./appimagetool
 chmod +x ./appimagetool
 
 # Do the thing!
-./appimagetool --comp zstd \
-  --mksquashfs-opt -Xcompression-level --mksquashfs-opt 10 \
-  -n -u "$UPINFO" "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-anylinux-"$ARCH".AppImage
+./appimagetool -n -u "$UPINFO" "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-distrozsync-"$ARCH".AppImage
 mv ./*.AppImage* ..
+
+# make different appimage with zsyncmake2
+rm -f /usr/bin/zsyncmake
+wget "https://github.com/AppImageCommunity/zsync2/releases/download/continuous/zsyncmake2-75-9337846-x86_64.AppImage" -O /usr/bin/zsyncmake
+
+./appimagetool -n -u "$UPINFO" "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-zsync2-"$ARCH".AppImage
+mv ./*.AppImage* ..
+
 cd ..
-rm -rf ./"$APP" || exit 1
+rm -rf ./"$APP"
 echo "All Done!"
