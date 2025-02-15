@@ -24,10 +24,9 @@ jobs:
         pacman-key --init && pacman-key --populate archlinux
         printf "\n[extra]\nInclude = /etc/pacman.d/mirrorlist-arch\n" | tee -a /etc/pacman.conf
         pacman -Syu --noconfirm libxext libxi zlib libpng pcre2 harfbuzz graphite \
-          glib2 freetype2 fontconfig expat bzip2 brotli
+          glib2 freetype2 fontconfig expat bzip2 brotli zsync
 
-        wget https://github.com/AppImageCommunity/zsync2/releases/download/continuous/zsyncmake2-75-9337846-x86_64.AppImage -O /usr/bin/zsyncmake
-        chmod +x ./*-appimage.sh /usr/bin/zsyncmake && ./*-appimage.sh
+        chmod +x ./*-appimage.sh && ./*-appimage.sh
         mkdir dist
         mv *.AppImage* dist/
 
