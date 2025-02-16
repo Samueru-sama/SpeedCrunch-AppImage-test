@@ -81,4 +81,6 @@ mv ./*.AppImage* ..
 
 cd ..
 rm -rf ./"$APP"
+
+sha256sum *.AppImage*
 echo "All Done!"
