@@ -7,7 +7,6 @@ export APPIMAGE_EXTRACT_AND_RUN=1
 
 APP=SpeedCrunch
 SITE="heldercorreia/speedcrunch"
-UPINFO="gh-releases-zsync|$(echo $GITHUB_REPOSITORY | tr '/' '|')|continuous|*$ARCH.AppImage.zsync"
 APPIMAGETOOL="https://github.com/AppImage/appimagetool/releases/download/continuous/appimagetool-$ARCH.AppImage"
 
 DESKTOP="https://bitbucket.org/heldercorreia/speedcrunch/raw/fa4f5d23f28b6458b54c617230f66af41fc94d7e/pkg/org.speedcrunch.SpeedCrunch.desktop"
@@ -66,14 +65,18 @@ wget -q "$APPIMAGETOOL" -O ./appimagetool
 chmod +x ./appimagetool
 
 # Do the thing!
+UPINFO="gh-releases-zsync|$(echo $GITHUB_REPOSITORY | tr '/' '|')|continuous|*-distrozsync-$ARCH.AppImage.zsync"
+UPINFO2="gh-releases-zsync|$(echo $GITHUB_REPOSITORY | tr '/' '|')|continuous|*-zsync2-$ARCH.AppImage.zsync"
+
 ./appimagetool -n -u "$UPINFO" "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-distrozsync-"$ARCH".AppImage
 mv ./*.AppImage* ..
 
 # make different appimage with zsyncmake2
 rm -f /usr/bin/zsyncmake
 wget "https://github.com/AppImageCommunity/zsync2/releases/download/continuous/zsyncmake2-75-9337846-x86_64.AppImage" -O /usr/bin/zsyncmake
+chmod +x /usr/bin/zsyncmake
 
-./appimagetool -n -u "$UPINFO" "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-zsync2-"$ARCH".AppImage
+./appimagetool -n -u "$UPINFO2" "$PWD"/AppDir "$PWD"/"$APP"-"$VERSION"-zsync2-"$ARCH".AppImage
 mv ./*.AppImage* ..
 
 cd ..
